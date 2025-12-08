@@ -120,13 +120,11 @@ MIT License - feel free to modify and share!
 
 Created to help giffgaff users optimize their mobile plans and save money.
 
+## License
+
+MIT License - feel free to modify and share!
+
 ---
 
 **Star this repo ⭐ if you found it useful!**
 ```
-
-### File 3: `.gitignore` (Optional but recommended)
-```
-# Google Apps Script
-.clasp.json
-.claspignore
