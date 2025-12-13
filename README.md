@@ -128,6 +128,35 @@ MIT License - feel free to modify and share!
 
 **Star this repo ⭐ if you found it useful!**
 
+## Demo
+
+Here are a few screenshots of the web app in action (all images are in `assets/demo/`):
+
+<p align="center">
+   <img src="assets/demo/home-ui.png" alt="Home screen" width="800" />
+</p>
+
+**Home screen** — the main UI where you click **Analyze My Usage** to start the analysis.
+
+<p align="center">
+   <img src="assets/demo/analyzing-loading-ui.png" alt="Analyzing (loading)" width="800" />
+</p>
+
+**Analyzing** — the loading / progress state after starting an analysis.
+
+<p align="center">
+   <img src="assets/demo/open-your-report-ui.png" alt="Analysis complete - open your report" width="800" />
+</p>
+
+**Analysis complete** — click the button to open your generated spreadsheet report.
+
+<p align="center">
+   <img src="assets/demo/giffgaff-usage-history-excel-report.png" alt="Spreadsheet report" width="1000" />
+</p>
+
+**Spreadsheet report** — the generated Google Sheet containing `Usage Data`, `Usage Chart with Plans`, and the `Recommendations` sheet.
+
+
 ## Deployment & Self-hosting (recommended)
 
 Important: The web app must be deployed so it runs as the user who accesses it if you want other people to analyze *their* Gmail data. If you plan to publish or share this project, please read the options below.
