@@ -1,4 +1,3 @@
-// test clasp push
 function extractGiffgaffUsage() {
   // Search for giffgaff usage emails
   var searchQuery = GGA_CONFIG.SEARCH_QUERY;
