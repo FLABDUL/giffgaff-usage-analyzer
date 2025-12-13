@@ -172,8 +172,8 @@ function extractGiffgaffUsage() {
     Logger.log('✓ Done! Open the spreadsheet to view results: ' + spreadsheet.getUrl());
   }
   
-  // Return the URL so it shows in execution log
-  return 'Successfully extracted ' + data.length + ' records. Spreadsheet: ' + spreadsheet.getUrl();
+  // Return the spreadsheet URL (used by the web UI)
+  return spreadsheet.getUrl();
 }
 
 function analyzeUsageAndRecommendPlan(data) {

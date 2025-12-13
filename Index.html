@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>giffgaff Usage Analyzer</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: linear-gradient(135deg,#667eea 0%,#764ba2 100%); min-height: 100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+    .container { background:white; border-radius:20px; box-shadow:0 20px 60px rgba(0,0,0,0.3); max-width:600px; width:100%; padding:40px; }
+    h1 { color:#333; font-size:32px; margin-bottom:10px; text-align:center; }
+    .subtitle { color:#666; text-align:center; margin-bottom:30px; font-size:16px; }
+    .feature-list { background:#f8f9fa; border-radius:10px; padding:20px; margin-bottom:30px; }
+    .feature-list h2 { color:#333; font-size:18px; margin-bottom:15px; }
+    .feature-list ul { list-style:none; }
+    .feature-list li { color:#555; padding:8px 0; padding-left:25px; position:relative; }
+    .feature-list li:before { content: "✓"; position:absolute; left:0; color:#667eea; font-weight:bold; }
+    .btn { background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:white; border:none; padding:15px 30px; font-size:18px; border-radius:10px; cursor:pointer; width:100%; font-weight:600; transition:transform 0.2s, box-shadow 0.2s; }
+    .btn:hover { transform:translateY(-2px); box-shadow:0 10px 20px rgba(102,126,234,0.3); }
+    .btn:active { transform:translateY(0); }
+    .btn:disabled { background:#ccc; cursor:not-allowed; transform:none; }
+    .status { margin-top:20px; padding:15px; border-radius:10px; text-align:center; display:none; }
+    .status.loading { display:block; background:#fff3cd; color:#856404; }
+    .status.success { display:block; background:#d4edda; color:#155724; }
+    .status.error { display:block; background:#f8d7da; color:#721c24; }
+    .spinner { border:3px solid #f3f3f3; border-top:3px solid #667eea; border-radius:50%; width:30px; height:30px; animation: spin 1s linear infinite; margin:10px auto; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .link-button { display:inline-block; background:#28a745; color:white; padding:10px 20px; border-radius:5px; text-decoration:none; margin-top:10px; font-weight:600; }
+    .link-button:hover { background:#218838; }
+    .info-box { background:#e7f3ff; border-left:4px solid #2196F3; padding:15px; margin-bottom:20px; border-radius:5px; }
+    .info-box p { color:#555; font-size:14px; line-height:1.6; }
+    .footer { text-align:center; margin-top:30px; color:#999; font-size:14px; }
+    .footer a { color:#667eea; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📊 giffgaff Usage Analyzer</h1>
+    <p class="subtitle">Analyze your data usage and save money</p>
+    <div class="info-box">
+      <p><strong>Privacy First:</strong> This tool only accesses YOUR giffgaff usage emails in YOUR Gmail account. All data stays in your Google Drive.</p>
+    </div>
+    <div class="feature-list">
+      <h2>What You'll Get:</h2>
+      <ul>
+        <li>Complete usage history from your emails</li>
+        <li>Beautiful charts with plan tier comparisons</li>
+        <li>Smart cost analysis and recommendations</li>
+        <li>Annual savings calculations</li>
+        <li>Personalized plan suggestions</li>
+      </ul>
+    </div>
+    <button class="btn" id="analyzeBtn" onclick="runAnalysis()">Analyze My Usage</button>
+    <div id="status" class="status">
+      <div class="spinner"></div>
+      <p id="statusMessage">Analyzing your giffgaff emails...</p>
+    </div>
+    <div class="footer">
+      <p>Made with ❤️ by Abdul Hakim</p>
+      <p><a href="https://github.com/FLABDUL/giffgaff-usage-analyzer" target="_blank">View on GitHub</a></p>
+    </div>
+  </div>
+
+  <script>
+    function runAnalysis() {
+      const btn = document.getElementById('analyzeBtn');
+      const status = document.getElementById('status');
+      const statusMessage = document.getElementById('statusMessage');
+
+      btn.disabled = true;
+      status.className = 'status loading';
+      statusMessage.textContent = 'Analyzing your giffgaff emails... This may take 30-60 seconds.';
+
+      google.script.run
+        .withSuccessHandler(function(result) {
+          if (result.success) {
+            status.className = 'status success';
+            statusMessage.innerHTML = result.message + '<br><br><a href="' + result.spreadsheetUrl + '" target="_blank" class="link-button">Open Your Report</a>';
+          } else {
+            status.className = 'status error';
+            statusMessage.textContent = result.message;
+            btn.disabled = false;
+          }
+        })
+        .withFailureHandler(function(error) {
+          status.className = 'status error';
+          statusMessage.textContent = 'Error: ' + error.message;
+          btn.disabled = false;
+        })
+        .analyzeGiffgaffUsage();
+    }
+  </script>
+</body>
+</html>
