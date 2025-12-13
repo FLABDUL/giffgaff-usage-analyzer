@@ -127,4 +127,48 @@ MIT License - feel free to modify and share!
 ---
 
 **Star this repo ⭐ if you found it useful!**
+
+## Deployment & Self-hosting (recommended)
+
+Important: The web app must be deployed so it runs as the user who accesses it if you want other people to analyze *their* Gmail data. If you plan to publish or share this project, please read the options below.
+
+### Quick summary
+- For a live, multi-user web app that reads each user's Gmail, set **Execute as: User accessing the web app** when you create or edit your deployment.
+- If you just want to run it yourself (personal use), keep **Execute as: Me** — the app will read your Gmail and generate reports for you only.
+
+### Deploy (self-host) — step-by-step
+1. Install CLASP (if you haven't already):
+   ```bash
+   npm install -g @google/clasp
+   clasp login
+   ```
+2. Clone and link the project (or use existing repo):
+   ```bash
+   git clone https://github.com/FLABDUL/giffgaff-usage-analyzer.git
+   cd giffgaff-usage-analyzer
+   clasp clone YOUR_SCRIPT_ID
+   ```
+3. Push your changes to Apps Script:
+   ```bash
+   clasp push
+   ```
+4. Open the Apps Script editor and deploy:
+   - In the Apps Script editor: **Deploy → New deployment**
+   - Select **Web app**
+   - Configure: **Execute as**: choose **User accessing the web app** (recommended for multi-user) or **Me** (personal use)
+   - Set **Who has access**: start with **Only myself** for testing, then change as needed
+   - Click **Deploy** and follow the authorization prompts
+
+### Important notes & limitations
+- Authorization: if you choose **Execute as: User accessing the web app**, each user must authorize the script to access their Gmail and Drive. Google shows an "unverified app" warning for projects that aren't verified — follow the Google verification process to reduce friction if you intend to publish.
+- Quotas & timeouts: Apps Script enforces a 6-minute execution timeout and Gmail API quotas. If a user has many emails, the script may time out. Consider running on a smaller query, or batching runs.
+- Ownership: When the app runs **as the user**, it reads that user's Gmail and creates spreadsheets in their Drive. When it runs **as you**, it accesses your Gmail only (not suitable for multi-user use).
+- Maintenance: When you update code, update the existing deployment (or create a new one). The web app URL remains stable if you update the deployment rather than creating a brand new one.
+
+### Recommendations for Portfolio & Sharing
+- **Do not publish a live app URL** pointing to a deployment that executes as you — it will appear to run for others but will only access your data.
+- For portfolio: include a short demo video, screenshots, and clear self-host instructions (like those above) rather than linking to a live instance.
+- If you want to provide a public service, follow Google's App Verification and privacy requirements (privacy policy, terms of service, etc.) before switching to public access.
+
+Would you like me to add a short demo GIF / video link and update the README's "Quick Start" with the new web app instructions? I can also add a short troubleshooting section for the 'unverified app' flow and common authorization errors.
 ```
